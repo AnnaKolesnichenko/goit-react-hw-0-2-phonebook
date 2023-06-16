@@ -1,14 +1,12 @@
-import './contacts.css';
+import css from './contacts.module.css';
 
-const Contacts = ({contacts, name, onAddName}) => {
+const Contacts = ({name}) => {
 
     return (
-        <div>
-            <h1>Contacts</h1>
-            <ul>
-                <li>{contacts.map(contact => {
-                        return contact;
-                    })}
+        <div className={css.main}>
+            <h1 className={css.title}>Contacts</h1>
+            <ul className={css.list}>
+                <li className={css.list_item}>{name}
                 </li>
             </ul>
         </div>

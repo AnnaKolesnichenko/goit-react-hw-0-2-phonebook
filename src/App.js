@@ -11,10 +11,16 @@ class App extends Component {
     name: '',
   }
 
-  onAddName(name) {
+  onFormHandlerSubmit = (data) => {
+    console.log(data);
+    const addedName = data.name;
+    return addedName;
+  }
+
+  onAddName(data) {
     // this.contacts.push(name);
     this.setState(prevNames => {
-      this.contacts = [...prevNames, name];
+      this.contacts = [...prevNames, data.name];
     })
   }
   
@@ -23,9 +29,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <AddContact contacts={contacts} name={name}/>
+        <AddContact contacts={contacts} name={name} onFormSubmit={this.onFormHandlerSubmit}/>
 
-        <Contacts contacts={contacts} name={name} onAddName={this.onAddName}/>
+        <Contacts name={this.state.name} onAddName={this.onAddName}/>
       </div>
     );
   }
