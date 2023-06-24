@@ -1,6 +1,8 @@
 .main {
+    display: flex;
+    flex-direction: column;
     margin-left: 30px;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 .title {
@@ -9,9 +11,30 @@
 }
 
 .list {
-    /* list-style: none; */
+    margin: 0;
+    padding-left: 30px;
 }
 
 .list_item {
     text-align: left;
+}
+
+.find_title {
+    margin: 0;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.find_input {
+    margin-bottom: 20px;
+    padding: 5px;
+    width: 150px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+.find_input:active,
+.find_input:focus {
+    border: 1px  rgb(167, 167, 229);
 }
