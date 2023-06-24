@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import AddContact from './components/AddContact/AddContact';
 import Contacts from './components/Contacts/Contacts';
+import Filter from 'components/Filter/Filter';
 
 import './App.css';
+import css from './components/Contacts/contacts.module.css';
 import { nanoid } from 'nanoid';
 
 
@@ -17,6 +19,8 @@ class App extends Component {
     filter: '',
   }
 
+
+  //adding and creating contacts
   onContactCreate = (data) => {
     this.setState({name: data.name, number: data.number});
      const newContact = {
@@ -29,7 +33,15 @@ class App extends Component {
     })
     console.log(this.state.contacts);    
   }
-   
+
+  
+  //filter by term
+  onGetFilterData = (filterData) =>{
+    this.setState({filter: filterData.filter});
+    console.log(this.state.filter);
+  }
+
+
   onFilterChange = (contacts, filter) => {
     const filtered = contacts.filter(contact => {
       return contact.toLowerCase().indexOf(filter.toLowerCase()) > -1;
@@ -40,13 +52,16 @@ class App extends Component {
         
   }
 
+
+  //render
   render() {
     const {contacts, name, number, filter} = this.state;
 
     return (
       <div className="App">
         <AddContact contacts={contacts} name={name} number={number} onFormSubmit={this.onContactCreate}/>
-
+        <h1 className={css.title}>Contacts</h1>
+        <Filter filter={filter} onGetFilterData={this.onGetFilterData}/>
         <Contacts contacts={contacts} filter={filter} onFilter={this.onFilterChange}/>
       </div>
     );
