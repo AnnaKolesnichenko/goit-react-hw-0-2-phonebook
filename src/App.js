@@ -3,35 +3,46 @@ import AddContact from './components/AddContact/AddContact';
 import Contacts from './components/Contacts/Contacts';
 
 import './App.css';
+import { nanoid } from 'nanoid';
+
 
 class App extends Component {
-
   state = {
     contacts: [],
     name: '',
   }
 
-  onFormHandlerSubmit = (data) => {
-    console.log(data);
-    const addedName = data.name;
-    return addedName;
+  onContactCreate = (data) => {
+    console.log(data.name);
+
+    this.setState({name: data.name});
+
+     const newContact = {
+      ...data,
+      id: nanoid(),
+    };
+    console.log(newContact); 
   }
 
-  onAddName(data) {
-    // this.contacts.push(name);
-    this.setState(prevNames => {
-      this.contacts = [...prevNames, data.name];
-    })
+
+  onAddContacts = (data) => {
+
+    this.setState(prevNames => ({
+      contacts: [...prevNames.contacts, data.name],
+    }))
+    
   }
+
+
   
   render() {
     const {contacts, name} = this.state;
 
     return (
       <div className="App">
-        <AddContact contacts={contacts} name={name} onFormSubmit={this.onFormHandlerSubmit}/>
+        <AddContact contacts={contacts} name={name} onFormSubmit={this.onContactCreate}/>
 
-        <Contacts name={this.state.name} onAddName={this.onAddName}/>
+        <Contacts contacts={contacts}/>
       </div>
     );
   }

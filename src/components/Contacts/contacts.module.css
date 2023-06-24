@@ -12,4 +12,6 @@
     /* list-style: none; */
 }
 
-.list_item {}
+.list_item {
+    text-align: left;
+}

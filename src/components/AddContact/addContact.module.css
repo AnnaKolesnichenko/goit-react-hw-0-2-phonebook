@@ -10,7 +10,11 @@
 .form {
     display: flex;
     flex-direction: column;
-    width: 200px;
+}
+
+.form label {
+    margin-left: 0;
+    width: 150px;
 }
 
 .name_input {

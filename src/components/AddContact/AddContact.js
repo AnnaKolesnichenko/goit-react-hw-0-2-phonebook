@@ -3,23 +3,21 @@ import css from './addContact.module.css';
 import { Component } from 'react';
 
 class AddContact extends Component {
-
     state = {
         name: '',
     };
 
     handleFormChange = (e) => {
-        // this.setState({name: e.currentTarget.value})
-        const value = e.currentTarget.value;
-
         this.setState({
-            name: value,
+            name: e.target.value,
         });
     };
 
     handleFormSubmit = (e) => {
         e.preventDefault();
-        this.props.onFormSubmit(this.state);
+        this.props.onFormSubmit({
+            name: this.state.name
+        });
         this.resetForm();
     };
 
