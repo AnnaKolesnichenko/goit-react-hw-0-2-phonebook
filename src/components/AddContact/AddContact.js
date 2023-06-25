@@ -1,4 +1,5 @@
 import css from './addContact.module.css';
+import PropTypes from 'prop-types';
 
 import { Component } from 'react';
 
@@ -65,6 +66,12 @@ class AddContact extends Component {
             </div>
         )
     }
+}
+
+AddContact.propTypes = {
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    onFormSubmit: PropTypes.func
 }
 
 export default AddContact;
