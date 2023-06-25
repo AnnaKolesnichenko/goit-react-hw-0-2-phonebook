@@ -23,15 +23,23 @@ class App extends Component {
   //adding and creating contacts
   onContactCreate = (data) => {
     this.setState({name: data.name, number: data.number});
-     const newContact = {
-      ...data,
-      id: nanoid(),
-    };
-    
-    this.setState({
-      contacts: [...this.state.contacts, newContact],
-    })
-    console.log(this.state.contacts);    
+
+    const duplicateName = this.state.contacts.map(contact => contact.name)
+                          .includes(data.name);
+
+    if(duplicateName) {
+      alert('already there!!');
+    } else {
+      const newContact = {
+        ...data,
+        id: nanoid(),
+      };
+      this.setState({
+        contacts: [...this.state.contacts, newContact],
+      })
+    }
+
+      console.log(this.state.contacts); 
   }
 
   
@@ -41,17 +49,12 @@ class App extends Component {
     console.log(this.state.filter);
   }
 
-
-  onFilterChange = (contacts, filter) => {
-    const filtered = contacts.filter(contact => {
-      return contact.toLowerCase().indexOf(filter.toLowerCase()) > -1;
-    })
+  //deleting data
+  onDeleteContact = (contactId) => {
     this.setState({
-      contacts: filtered,
-    })
-        
+      contacts: this.state.contacts.filter(contact => contact.id !== contactId)
+    });
   }
-
 
   //render
   render() {
@@ -62,7 +65,7 @@ class App extends Component {
         <AddContact contacts={contacts} name={name} number={number} onFormSubmit={this.onContactCreate}/>
         <h1 className={css.title}>Contacts</h1>
         <Filter filter={filter} onGetFilterData={this.onGetFilterData}/>
-        <Contacts contacts={contacts} filter={filter} onFilter={this.onFilterChange}/>
+        <Contacts contacts={contacts} filter={filter} onDelete={this.onDeleteContact}/>
       </div>
     );
   }

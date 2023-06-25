@@ -20,7 +20,7 @@ class Filter extends Component {
             <div className={css.container}>
                 <form className={css.container_form}>
                     <h2 className={css.find_title}>Find contacts by name</h2>
-                    <input type='text' className={css.find_input} name='filter' onChange={this.handleFilterInput}></input>
+                    <input type='text' className={css.find_input} name='filter' value={this.state.filter} onChange={this.handleFilterInput}></input>
                 </form>
             </div>
         )
