@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import css from './contacts.module.css';
 
-const Contacts = ({contacts, filter, onDelete}) => {
-    const filteredContacts = contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+const Contacts = ({contacts, onDelete}) => {
 
+  if(contacts.length > 0) {
     return (
         <div className={css.main}>
-
+            <h1 className={css.title}>Contacts</h1>
             <ul className={css.list}>
-                {filteredContacts.map((contact) => {
+                {contacts.length === 0 ? 'There is no contact added' : contacts.map((contact) => {
                     return <li className={css.list_item} key={contact.id}>
                         {contact.name}: {contact.number}
                         <button className={css.delete_btn} onClick={() => onDelete(contact.id)}>Delete</button>
@@ -21,6 +19,10 @@ const Contacts = ({contacts, filter, onDelete}) => {
             </ul>
         </div>
     )
+  } else {
+    return "There is nothing added here yet..."
+  }
+
 }
 
 Contacts.propTypes = {
@@ -28,7 +30,6 @@ Contacts.propTypes = {
         name: PropTypes.string.isRequired,
         number: PropTypes.number.isRequired
     })),
-    filter: PropTypes.string.isRequired,
     onDelete: PropTypes.func
 }
 

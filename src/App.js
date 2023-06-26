@@ -4,7 +4,6 @@ import Contacts from './components/Contacts/Contacts';
 import Filter from 'components/Filter/Filter';
 
 import './App.css';
-import css from './components/Contacts/contacts.module.css';
 import { nanoid } from 'nanoid';
 
 
@@ -22,31 +21,28 @@ class App extends Component {
 
   //adding and creating contacts
   onContactCreate = (data) => {
-    this.setState({name: data.name, number: data.number});
-
-    const duplicateName = this.state.contacts.map(contact => contact.name)
-                          .includes(data.name);
+    const duplicateName = this.state.contacts.some((contact) => contact.name.toLowerCase() === data.name.toLowerCase());
 
     if(duplicateName) {
       alert('already there!!');
-    } else {
+      return;
+    } 
+    
       const newContact = {
         ...data,
         id: nanoid(),
       };
-      this.setState({
-        contacts: [...this.state.contacts, newContact],
-      })
-    }
-
-      console.log(this.state.contacts); 
+      this.setState((prevState) => ({
+        contacts: [newContact, ...prevState.contacts],
+      }))
   }
 
   
   //filter by term
-  onGetFilterData = (filterData) =>{
-    this.setState({filter: filterData.filter});
-    console.log(this.state.filter);
+  onGetFilterData = (e) =>{
+    this.setState({
+      filter: e.target.value 
+  })
   }
 
   //deleting data
@@ -56,16 +52,24 @@ class App extends Component {
     });
   }
 
+  getFilteredContacts = () => {
+    const {contacts, filter} = this.state;
+
+    return contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+
   //render
   render() {
     const {contacts, name, number, filter} = this.state;
+    const filteredNames = this.getFilteredContacts(contacts);
 
     return (
       <div className="App">
         <AddContact contacts={contacts} name={name} number={number} onFormSubmit={this.onContactCreate}/>
-        <h1 className={css.title}>Contacts</h1>
         <Filter filter={filter} onGetFilterData={this.onGetFilterData}/>
-        <Contacts contacts={contacts} filter={filter} onDelete={this.onDeleteContact}/>
+        <Contacts contacts={filteredNames} onDelete={this.onDeleteContact}/>
       </div>
     );
   }
