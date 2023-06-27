@@ -71,7 +71,7 @@ class AddContact extends Component {
 AddContact.propTypes = {
     name: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
-    onFormSubmit: PropTypes.func
+    onFormSubmit: PropTypes.func.isRequired
 }
 
 export default AddContact;
